@@ -26,7 +26,7 @@ class _QuizPageState extends State<QuizPage> {
   void generateProblems() {
     problems.clear(); // Clear the existing problems
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1; i++) {
       int operatorIndex = random.nextInt(operators.length);
       String operator = operators[operatorIndex];
       int firstNumber = random.nextInt(21); // Generate numbers between 0 and 20
@@ -83,39 +83,61 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _showResultDialog() {
+    timer?.cancel(); // Cancel the countdown timer
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Stack(
-          children: [
-            ModalBarrier(dismissible: false, color: Colors.black54),
-            AlertDialog(
-              title: Text('Incorrect Answer'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
+        return WillPopScope(
+          onWillPop: () async => false, // Disable pop gesture
+          child: Stack(
+            alignment: Alignment
+                .center, // Center the content vertically and horizontally
+            children: [
+              ModalBarrier(dismissible: false, color: Colors.black54),
+              SimpleDialog(
+                title: Center(
+                    child: Text(
+                  'Incorrect Answer',
+                  style: TextStyle(color: Color.fromRGBO(245, 70, 57, 1)),
+                )),
+                contentPadding:
+                    EdgeInsets.all(20), // Add padding to the content
                 children: [
-                  Text(
-                    'Total Score:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '$currentScore',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the dialog
-                      Navigator.pop(context); // Close the quiz page
-                    },
-                    style: ElevatedButton.styleFrom(primary: Colors.blue),
-                    child: Text('Play Again'),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Correct Answer: ${problems[currentQuestionIndex].result}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Your Total Score:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '$currentScore',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Close the dialog
+                          Navigator.pop(context); // Close the quiz page
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        child: Text('Play Again'),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
