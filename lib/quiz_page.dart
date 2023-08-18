@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
-
-import 'package:flutter/material.dart';
+import 'enums.dart';
 
 class QuizPage extends StatefulWidget {
+  final GameMode mode;
+
+  QuizPage({required this.mode});
+
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -23,14 +27,35 @@ class _QuizPageState extends State<QuizPage> {
 
   bool showCorrectAnswer = false; // Flag to show correct answer
 
+  @override
+  void initState() {
+    super.initState();
+    generateProblems();
+    startTimer();
+  }
+
   void generateProblems() {
     problems.clear(); // Clear the existing problems
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 5; i++) {
       int operatorIndex = random.nextInt(operators.length);
       String operator = operators[operatorIndex];
-      int firstNumber = random.nextInt(21); // Generate numbers between 0 and 20
-      int secondNumber = random.nextInt(21);
+      int firstNumber, secondNumber;
+
+      switch (widget.mode) {
+        case GameMode.easy:
+          firstNumber = random.nextInt(10) + 1;
+          secondNumber = random.nextInt(10) + 1;
+          break;
+        case GameMode.medium:
+          firstNumber = random.nextInt(26) + 5;
+          secondNumber = random.nextInt(26) + 5;
+          break;
+        case GameMode.hard:
+          firstNumber = random.nextInt(36) + 15;
+          secondNumber = random.nextInt(36) + 15;
+          break;
+      }
 
       if (operator == '-') {
         firstNumber = max(firstNumber, secondNumber); // Ensure positive result
@@ -96,24 +121,13 @@ class _QuizPageState extends State<QuizPage> {
             children: [
               ModalBarrier(dismissible: false, color: Colors.black54),
               SimpleDialog(
-                title: Center(
-                    child: Text(
-                  'Incorrect Answer',
-                  style: TextStyle(color: Color.fromRGBO(245, 70, 57, 1)),
-                )),
+                title: Center(child: Text('Incorrect Answer')),
                 contentPadding:
                     EdgeInsets.all(20), // Add padding to the content
                 children: [
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Correct Answer: ${problems[currentQuestionIndex].result}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Text(
                         'Your Total Score:',
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -141,13 +155,6 @@ class _QuizPageState extends State<QuizPage> {
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    generateProblems();
-    startTimer();
   }
 
   @override

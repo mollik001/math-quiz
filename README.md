@@ -2,10 +2,6 @@
 
 A new Flutter project.
 
-This is a simple math quiz that performs simple math equations.
-
-
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
