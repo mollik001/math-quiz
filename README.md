@@ -1,16 +1,17 @@
-# math_quiz
+# Math Quiz App
 
-A new Flutter project.
+The Math Quiz App is an interactive mobile application designed to test and enhance your math skills. Challenge yourself with math questions of varying difficulty levels and improve your mental math abilities.
 
-## Getting Started
+![homepage](https://github.com/mollik001/math-quiz/assets/85638706/7d3cfacb-20b4-4292-b4b3-764135f24404)                                   ![mainpage](https://github.com/mollik001/math-quiz/assets/85638706/d0a99025-4ecc-4336-966f-a93930299e76)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Features
+
+- Multiple difficulty levels for all skill levels.
+- Timed quizzes to boost quick thinking.
+- Randomized questions for a unique experience.
+- Score tracking and progress monitoring.
+- Educational and fun way to sharpen math skills.
